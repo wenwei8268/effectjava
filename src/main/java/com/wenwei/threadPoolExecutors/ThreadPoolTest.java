@@ -97,6 +97,7 @@ public class ThreadPoolTest {
                 @Override
                 public void run() {
                     try {
+                        System.out.println("test");
                         atomicInteger.incrementAndGet();
                     } catch (java.lang.Exception e) {
                         System.out.println(e);
@@ -106,6 +107,14 @@ public class ThreadPoolTest {
                 }
             });
         }
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            @Override
+            public void run() {
+            //    SecurityManager securityManager = System.getSecurityManager();
+             //   System.out.println(securityManager.toString());
+                System.out.println("executor is runing ");
+            }
+        }));
         executorService.shutdown();
         System.out.println("atmoic : " + atomicInteger);
         System.out.println("time cost: "+ (System.currentTimeMillis()-tt));

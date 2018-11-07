@@ -65,5 +65,13 @@ public class SerializableKryoDemo {
         input.close();
 
 
+
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("executor is runing ");
+            }
+        }));
+
     }
 }
