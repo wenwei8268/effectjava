@@ -1,0 +1,8 @@
+--找到特定的tomcat 并且把它关闭；
+sudo ps -ef | grep ophos | awk {'print $2'} | xargs -I {} sudo kill -9 {}
+
+---定位catalina.out中含有某个特定字符的方法
+grep -in CKSQ1810120009 catalina.2018-10*
+
+--查找某特定文件中含有 某个字符
+ack “test"
