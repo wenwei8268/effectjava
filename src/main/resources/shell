@@ -6,3 +6,5 @@ grep -in CKSQ1810120009 catalina.2018-10*
 
 --查找某特定文件中含有 某个字符
 ack “test"
+--查看mac型号以及配置
+sysctl machdep.cpu
