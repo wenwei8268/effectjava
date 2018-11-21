@@ -4,6 +4,8 @@ package com.wenwei.threadPoolExecutors;
  */
 
 
+import org.junit.Test;
+
 import java.util.concurrent.*;
 
 /**
@@ -45,7 +47,51 @@ public class FututerTaskTest {
 
             System.out.println("所有任务执行完毕");
         }
-    }
+        @Test
+    public void testFuturePromise(){
+//            Promise
+        }
+    //测试semaphore ,信号量，可以多个线程同时访问一个对象，
+        @Test
+    public void testSemaphore() throws Exception{
+        // 线程池
+        ExecutorService exec = Executors.newCachedThreadPool();
+//        ExecutorService exec = Executors.newFixedThreadPool(20);
+        // 只能5个线程同时访问
+        final Semaphore semp = new Semaphore(5);
+        // 模拟20个客户端访问
+        for (int index = 0; index < 50; index++) {
+            final int NO = index;
+            Runnable run = new Runnable() {
+                public void run() {
+                    try {
+                        // 获取许可
+                        System.out.println("begin run the runnable " + NO);
+                        semp.acquire();
+                        System.out.println("Accessing: " + NO);
+                        Thread.sleep((long) (Math.random() * 6000));
+                        // 访问完后，释放
+                        semp.release();
+//                        System.out.println("-----------------" + semp.availablePermits());
+//                        availablePermits()指的是当前信号灯库中有多少个可以被使用
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }finally {
+                        System.out.println("-----------------" + semp.availablePermits());
+
+                    }
+                }
+            };
+            exec.execute(run);
+        }
+        // 退出线程池
+//            Thread.sleep(60000);
+//            exec.shutdown();
+            exec.awaitTermination(1000,TimeUnit.MILLISECONDS);
+//            exec.shutdownNow();
+        }
+
+}
     class Task implements Callable<Integer> {
         @Override
         public Integer call() throws Exception {
